@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Responsive Interactive Table</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -66,6 +67,20 @@
             transform: translate(-50%, -50%);
             pointer-events: none; /* Prevent circle from blocking clicks */
         }
+        .download-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #87CEEB;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .download-button:hover {
+            background-color: #5bb1d6; /* Darker blue on hover */
+        }
     </style>
 </head>
 <body>
@@ -76,6 +91,9 @@
     <div class="table-container">
         <table id="interactive-table"></table>
     </div>
+
+    <!-- Download Button -->
+    <button class="download-button" onclick="downloadTableImage()">Download Image</button>
 
     <script>
         // Define the image file paths
@@ -120,6 +138,17 @@
                 circle.className = 'circle';
                 cell.appendChild(circle); // Add circle
             }
+        }
+
+        // Function to download the table as an image
+        function downloadTableImage() {
+            const tableContainer = document.querySelector('.table-container'); // Target the table container
+            html2canvas(tableContainer).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'table_image.png'; // File name
+                link.href = canvas.toDataURL(); // Convert canvas to data URL
+                link.click(); // Simulate a click to trigger the download
+            });
         }
 
         // Build the table on page load
