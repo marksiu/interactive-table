@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Interactive Table</title>
+    <title>Corrected Interactive Table</title>
+    <!-- Ensure html2canvas is included -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f7f7f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
             margin: 0;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            flex-direction: column;
+            height: 100vh; /* Full viewport height */
         }
         .table-title {
             text-align: center;
@@ -24,20 +25,19 @@
             color: #87CEEB; /* Light blue for the title */
         }
         .table-container {
-            width: 100%; /* Full-width container */
+            width: auto; /* Automatically adjust based on content */
             overflow-x: auto; /* Enable horizontal scrolling */
+            border: 3px solid #87CEEB; /* Friendly border */
+            padding: 10px; /* Add padding to ensure it's included in capture */
         }
         table {
             border-collapse: collapse;
             text-align: center;
-            border: 3px solid #87CEEB; /* Light blue border */
-            border-radius: 10px;
             background-color: #ffffff; /* White table background */
-            width: 1200px; /* Fixed width larger than typical screen size */
         }
         td {
             border: 1px solid #ddd;
-            padding: 0;
+            padding: 10px; /* 10px padding */
             width: 150px; /* Fixed width */
             height: 150px; /* Fixed height */
             position: relative;
@@ -48,16 +48,16 @@
             background-color: #e0f7ff; /* Light blue hover effect */
         }
         .image-cell img {
-            width: calc(100% - 20px); /* Fit with 10px margin */
-            height: calc(100% - 20px);
+            width: calc(100% - 20px); /* Fit within padding */
+            height: calc(100% - 20px); /* Fit within padding */
             object-fit: cover;
-            margin: 10px; /* Spacing around the image */
+            margin: 0; /* No extra margin inside the cell */
             border: 2px solid #ddd; /* Border for the image */
             border-radius: 5px; /* Rounded corners for images */
         }
         .circle {
-            width: calc(100% - 20px); /* Max value matches the image's width */
-            height: calc(100% - 20px); /* Height equals the width for perfect proportion */
+            width: 130px; /* Matches the image width */
+            height: 130px; /* Matches the image height */
             border: 10px solid red;
             border-radius: 50%;
             background-color: transparent;
@@ -88,7 +88,7 @@
     <div class="table-title">Nendoroid Miku</div>
 
     <!-- Scrollable Table Container -->
-    <div class="table-container">
+    <div class="table-container" id="table-container">
         <table id="interactive-table"></table>
     </div>
 
@@ -142,12 +142,14 @@
 
         // Function to download the table as an image
         function downloadTableImage() {
-            const tableContainer = document.querySelector('.table-container'); // Target the table container
+            const tableContainer = document.getElementById('table-container'); // Target the table container
             html2canvas(tableContainer).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'table_image.png'; // File name
                 link.href = canvas.toDataURL(); // Convert canvas to data URL
                 link.click(); // Simulate a click to trigger the download
+            }).catch(error => {
+                console.error('Failed to capture table image:', error);
             });
         }
 
