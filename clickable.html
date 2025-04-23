@@ -18,11 +18,11 @@
             position: relative;
         }
         .circle {
-            width: 130px; /* Slightly smaller than the cell to fit inside */
+            width: 130px;
             height: 130px;
-            border: 10px solid red; /* Edge thickness */
+            border: 10px solid red;
             border-radius: 50%;
-            background-color: transparent; /* Transparent center */
+            background-color: transparent;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -38,32 +38,34 @@
 </head>
 <body>
     <div class="table-title">Nendoroid Miku</div>
-    <table>
-        <tbody>
-            <!-- Generate rows and columns -->
-            <script>
-                for (let row = 1; row <= 5; row++) {
-                    const rowContent = `<tr> 
-                        ${'<td onclick="toggleCircle(this)"></td>'.repeat(5)} 
-                        </tr>`;
-                    document.write(rowContent);
-                }
-            </script>
-        </tbody>
-    </table>
+    <table id="interactive-table"></table>
 
     <script>
+        // Function to build the table
+        function buildTable() {
+            const table = document.getElementById('interactive-table');
+            for (let i = 0; i < 5; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < 5; j++) {
+                    const cell = document.createElement('td');
+                    cell.setAttribute('onclick', 'toggleCircle(this)');
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+        }
+
         // Function to toggle the red circle
         function toggleCircle(cell) {
-            // Check if the cell already contains a circle
             if (cell.innerHTML.trim() === '') {
-                // Add the red circle
                 cell.innerHTML = '<div class="circle"></div>';
             } else {
-                // Remove the red circle
                 cell.innerHTML = '';
             }
         }
+
+        // Build the table on page load
+        buildTable();
     </script>
 </body>
 </html>
