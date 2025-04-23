@@ -3,19 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Table</title>
+    <title>Friendly Interactive Table</title>
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+        .table-title {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-family: 'Comic Sans MS', cursive;
+            color: #87CEEB; /* Light blue for the title */
+        }
         table {
             border-collapse: collapse;
-            margin: 20px auto;
             text-align: center;
+            border: 3px solid #87CEEB; /* Light blue border */
+            border-radius: 10px;
+            background-color: #ffffff; /* White table background */
         }
         td {
-            border: 1px solid black;
+            border: 1px solid #ddd;
             padding: 0;
             width: 150px;
             height: 150px;
             position: relative;
+            background-color: #f2f2f2; /* Light cell background */
+            transition: background-color 0.3s ease;
+        }
+        td:hover {
+            background-color: #e0f7ff; /* Light blue hover effect */
+        }
+        .image-cell img {
+            width: calc(100% - 20px); /* Fit with 10px margin */
+            height: calc(100% - 20px);
+            object-fit: cover;
+            margin: 10px; /* Spacing around the image */
+            border: 2px solid #ddd; /* Border for the image */
+            border-radius: 5px; /* Rounded corners for images */
         }
         .circle {
             width: 130px;
@@ -27,29 +59,44 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-        }
-        .table-title {
-            text-align: center;
-            font-size: 20px;
-            margin-bottom: 10px;
-            font-family: Arial, sans-serif;
+            pointer-events: none; /* Prevent circle from blocking clicks */
         }
     </style>
 </head>
 <body>
+    <!-- Table Title -->
     <div class="table-title">Nendoroid Miku</div>
-    <p>Updated 0103</p>
+
+    <!-- Interactive Table -->
     <table id="interactive-table"></table>
 
     <script>
+        // Define the image file paths
+        const imageUrls = [];
+        for (let i = 1; i <= 22; i++) {
+            imageUrls.push(`./image/image_${i}.jpg`); // Local image paths
+        }
+
         // Function to build the table
         function buildTable() {
             const table = document.getElementById('interactive-table');
+            let imageIndex = 0;
+
             for (let i = 0; i < 5; i++) {
                 const row = document.createElement('tr');
                 for (let j = 0; j < 5; j++) {
                     const cell = document.createElement('td');
-                    cell.setAttribute('onclick', 'toggleCircle(this)');
+                    cell.setAttribute('onclick', 'toggleCircle(this)'); // Clickable cell
+                    
+                    // Add an image if available
+                    if (imageIndex < imageUrls.length) {
+                        const img = document.createElement('img');
+                        img.src = imageUrls[imageIndex];
+                        cell.classList.add('image-cell');
+                        cell.appendChild(img);
+                        imageIndex++;
+                    }
+
                     row.appendChild(cell);
                 }
                 table.appendChild(row);
@@ -58,10 +105,13 @@
 
         // Function to toggle the red circle
         function toggleCircle(cell) {
-            if (cell.innerHTML.trim() === '') {
-                cell.innerHTML = '<div class="circle"></div>';
+            const existingCircle = cell.querySelector('.circle');
+            if (existingCircle) {
+                cell.removeChild(existingCircle); // Remove circle
             } else {
-                cell.innerHTML = '';
+                const circle = document.createElement('div');
+                circle.className = 'circle';
+                cell.appendChild(circle); // Add circle
             }
         }
 
