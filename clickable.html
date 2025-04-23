@@ -1,9 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Table</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin: 20px auto;
+            text-align: center;
+        }
+        td {
+            border: 1px solid black;
+            padding: 0;
+            width: 150px;
+            height: 150px;
+            position: relative;
+        }
+        .circle {
+            width: 130px;
+            height: 130px;
+            border: 10px solid red;
+            border-radius: 50%;
+            background-color: transparent;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .table-title {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 10px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
 </head>
 <body>
-    <p>shit</p>
+    <div class="table-title">Nendoroid Miku</div>
+    <p>Updated 0103</p>
+    <table id="interactive-table"></table>
+
+    <script>
+        // Function to build the table
+        function buildTable() {
+            const table = document.getElementById('interactive-table');
+            for (let i = 0; i < 5; i++) {
+                const row = document.createElement('tr');
+                for (let j = 0; j < 5; j++) {
+                    const cell = document.createElement('td');
+                    cell.setAttribute('onclick', 'toggleCircle(this)');
+                    row.appendChild(cell);
+                }
+                table.appendChild(row);
+            }
+        }
+
+        // Function to toggle the red circle
+        function toggleCircle(cell) {
+            if (cell.innerHTML.trim() === '') {
+                cell.innerHTML = '<div class="circle"></div>';
+            } else {
+                cell.innerHTML = '';
+            }
+        }
+
+        // Build the table on page load
+        buildTable();
+    </script>
 </body>
 </html>
