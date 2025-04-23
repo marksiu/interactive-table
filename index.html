@@ -22,19 +22,23 @@
             font-family: 'Comic Sans MS', cursive;
             color: #87CEEB; /* Light blue for the title */
         }
+        .table-container {
+            width: 100%; /* Full-width container */
+            overflow-x: auto; /* Enable horizontal scrolling */
+        }
         table {
             border-collapse: collapse;
             text-align: center;
             border: 3px solid #87CEEB; /* Light blue border */
             border-radius: 10px;
             background-color: #ffffff; /* White table background */
-            width: 90%; /* Responsive width for mobile */
-            max-width: 600px; /* Maximum width for larger screens */
+            width: 1200px; /* Fixed width larger than typical screen size */
         }
         td {
             border: 1px solid #ddd;
             padding: 0;
-            width: 20%; /* Percentage-based width for responsiveness */
+            width: 150px;
+            height: 150px;
             position: relative;
             background-color: #f2f2f2; /* Light cell background */
             transition: background-color 0.3s ease;
@@ -68,8 +72,10 @@
     <!-- Table Title -->
     <div class="table-title">Nendoroid Miku</div>
 
-    <!-- Interactive Table -->
-    <table id="interactive-table"></table>
+    <!-- Scrollable Table Container -->
+    <div class="table-container">
+        <table id="interactive-table"></table>
+    </div>
 
     <script>
         // Define the image file paths
